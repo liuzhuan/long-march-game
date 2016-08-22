@@ -47,6 +47,9 @@
 <script>
 	var countdownID;
 	var gravityID;
+	var tick = 0;
+	const TICK_NUM = 2;
+
 	export default {
 		data() {
 			return {
@@ -88,12 +91,16 @@
 
 			onKeyHandler(e){
 				if (e.keyCode == '32') {
-					console.log('come on!')
-					this.frame++
-					if (this.frame >= 8) {
-						this.frame = 8
-						clearInterval(gravityID)
-						window.removeEventListener('keyup', this.onKeyHandler)
+					tick++;
+					if (tick >= TICK_NUM) {
+						tick = 0;
+
+						this.frame++
+						if (this.frame >= 8) {
+							this.frame = 8
+							clearInterval(gravityID)
+							window.removeEventListener('keyup', this.onKeyHandler)
+						}
 					}
 				}		
 			},

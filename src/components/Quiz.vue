@@ -40,7 +40,8 @@
 				qid: 0,
 				quizdatas: quizdatas,
 				optionStates: [],
-				show: true
+				show: true,
+				correctAnswers: 0
 			}
 		},
 		computed: {
@@ -61,10 +62,13 @@
 					if (answerIndex.indexOf($index) != -1) {
 						// console.log('right!') right
 						this.optionStates.$set($index, 1)
-						
-						setTimeout(() => {
-							this.nextQuiz()
-						}, 500)
+
+						this.correctAnswers++
+						if (this.correctAnswers == answerIndex.length) {
+							setTimeout(() => {
+								this.nextQuiz()
+							}, 500)
+						}
 						
 					} else {
 						// console.log('wrong!') wrong
@@ -86,6 +90,8 @@
 			},
 
 			nextQuiz(){
+				this.correctAnswers = 0
+				
 				if (this.qid + 1 < this.quizdatas.length) {
 					this.qid = this.qid + 1
 					this.optionStates = this.getOptionStates()
